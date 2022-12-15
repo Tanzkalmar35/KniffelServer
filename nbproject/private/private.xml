@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/Users/carst/Documents/NetBeansProjects/BINF%202022/KniffelServer/src/gamedb/GameDataException.java</file>
+            <file>file:/C:/Users/carst/Documents/NetBeansProjects/BINF%202022/KniffelServer/src/gamedb/GameDataPlayer.java</file>
+            <file>file:/C:/Users/carst/Documents/NetBeansProjects/BINF%202022/KniffelServer/src/kniffelserver/CmdClientHelp.java</file>
+            <file>file:/C:/Users/carst/Documents/NetBeansProjects/BINF%202022/KniffelServer/src/gamedb/GameDataToMuchPlayersException.java</file>
+            <file>file:/C:/Users/carst/Documents/NetBeansProjects/BINF%202022/KniffelServer/src/kniffelserver/CmdClientMessage.java</file>
+            <file>file:/C:/Users/carst/Documents/NetBeansProjects/BINF%202022/KniffelServer/src/gamedb/GameDicesManagement.java</file>
+            <file>file:/C:/Users/carst/Documents/NetBeansProjects/BINF%202022/KniffelServer/src/kniffelserver/KniffelServer.java</file>
+            <file>file:/C:/Users/carst/Documents/NetBeansProjects/BINF%202022/KniffelServer/src/gamedb/GameData.java</file>
+            <file>file:/C:/Users/carst/Documents/NetBeansProjects/BINF%202022/KniffelServer/src/kniffelserver/CmdClientRename.java</file>
+            <file>file:/C:/Users/carst/Documents/NetBeansProjects/BINF%202022/KniffelServer/src/kniffelserver/CmdClientUsers.java</file>
+            <file>file:/C:/Users/carst/Documents/NetBeansProjects/BINF%202022/KniffelServer/src/kniffelserver/CmdClientExit.java</file>
+            <file>file:/C:/Users/carst/Documents/NetBeansProjects/BINF%202022/KniffelServer/src/gamedb/GameDataUserExistsException.java</file>
+            <file>file:/C:/Users/carst/Documents/NetBeansProjects/BINF%202022/KniffelServer/src/kniffelserver/CmdClientRollDice.java</file>
+            <file>file:/C:/Users/carst/Documents/NetBeansProjects/BINF%202022/KniffelServer/src/gamedb/GameDataUnknownUserException.java</file>
+            <file>file:/C:/Users/carst/Documents/NetBeansProjects/BINF%202022/KniffelServer/src/kniffelserver/ClientHandler.java</file>
+            <file>file:/C:/Users/carst/Documents/NetBeansProjects/BINF%202022/KniffelServer/src/gamedb/DataConnectedUser.java</file>
+            <file>file:/C:/Users/carst/Documents/NetBeansProjects/BINF%202022/KniffelServer/src/gamedb/GameDice.java</file>
+            <file>file:/C:/Users/carst/Documents/NetBeansProjects/BINF%202022/KniffelServer/src/kniffelserver/CmdClientIdentify.java</file>
+            <file>file:/C:/Users/carst/Documents/NetBeansProjects/BINF%202022/KniffelServer/src/kniffelserver/CmdClient.java</file>
+            <file>file:/C:/Users/carst/Documents/NetBeansProjects/BINF%202022/KniffelServer/src/gamedb/GameDataUnsupportedCharactersException.java</file>
+        </group>
+    </open-files>
+</project-private>
