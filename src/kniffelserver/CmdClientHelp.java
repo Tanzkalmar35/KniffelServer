@@ -1,18 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package kniffelserver;
 
 import gamedb.GameData;
 import gamedb.GameDataException;
 import java.net.Socket;
 
-/**
- *
- * @author carst
- */
 public class CmdClientHelp extends CmdClient {
 
     public CmdClientHelp(GameData db, Socket clientSocket, String cmdName) {
@@ -23,13 +14,19 @@ public class CmdClientHelp extends CmdClient {
     String excuteLocalCmd(String parameter) throws GameDataException {
         
         String outputString 
-                = "exit - close server connection\r\n"
-                + "help - informs about all server commands\r\n"
-                + "identify - show your identification\r\n"
-                + "message <text> - send <text> to all connected users\r\n"
-                + "rename <nickname> - rename user to <nickname>\r\n"
-                + "users - show all users\r\n"
-                + "rolldice - rolls one dice\r\n";
+                = "help - prints this\r\n"
+                + "rename <nickname> - lets you change your nickname\r\n"
+                + "list <specification(eg.users)> - lists things\r\n"
+                + "logout - logs you out of the session\r\n"
+                + "version - gives you the current game version\r\n"
+                + "creategame - creates a new game\r\n"
+                + "joingame - joins the already created game\r\n"
+                + "leavegame - leaves the current game\r\n"
+                + "startgame - starts the game\r\n"
+                + "rolldice - rolls the dice\r\n"
+                + "keepdice - keeps the current dice\r\n"
+                + "sort - sorts the dice\r\n"
+                + "kick <nickname> - kicks a user from the current game\r\n";
         
         return outputString;
     }

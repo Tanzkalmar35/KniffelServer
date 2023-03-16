@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package kniffelserver;
 
 import gamedb.GameData;
@@ -12,10 +7,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-/**
- *
- * @author carst
- */
 public class CmdClientMessage extends CmdClient {
 
     public CmdClientMessage(GameData db, Socket clientSocket, String cmdName) {
