@@ -13,7 +13,8 @@ public class CmdClientCreate extends CmdClient {
 
     @Override
     String excuteLocalCmd(String parameter) throws GameDataException {
-        throw new UnsupportedOperationException("Unimplemented method 'excuteLocalCmd'");
+        // set user as player (true) in users (GameData)
+        return "";
     }
     
 }

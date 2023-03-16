@@ -2,6 +2,7 @@ package gamedb;
 
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -14,6 +15,7 @@ public class GameData {
     private final Lock writeLock;
 
     private final ArrayList<DataConnectedUser> connectedUserList;
+    public HashMap<String, Boolean> users = new HashMap<>();
 
     private final int maxPlayers;
 
@@ -68,6 +70,7 @@ public class GameData {
             } catch (GameDataUnknownUserException ex) {
                 DataConnectedUser user = new DataConnectedUser(clientSocket);
                 connectedUserList.add(user);
+                users.put(user.getNickname(), false);
             }
         } finally {
             writeLock.unlock();
@@ -82,6 +85,12 @@ public class GameData {
             if (p.matcher(nickname).matches()) {
                 try {
                     getConnectedUser(clientSocket).setNickname(nickname);
+                    for(String k : users.keySet()){
+                        if(getConnectedUser(clientSocket).getNickname().equals(k)) {
+                            users.remove(k);
+                            users.put(nickname, false);
+                        }
+                    }
                 } catch (GameDataUnknownUserException ex) {
                     throw new GameDataUnknownUserException();
                 }

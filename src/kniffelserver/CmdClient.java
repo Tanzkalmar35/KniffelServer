@@ -2,6 +2,8 @@ package kniffelserver;
 
 import gamedb.GameData;
 import gamedb.GameDataException;
+
+import java.io.IOException;
 import java.net.Socket;
 
 abstract class CmdClient {
@@ -22,12 +24,12 @@ abstract class CmdClient {
         return cmdName;
     }
     
-    public String executeCmd(String parameter) {
+    public String executeCmd(String parameter) throws GameDataException, IOException {
        cmdOutputString = "server: "+getCmdName()+"\r\n";
        cmdOutputString += excuteLocalCmd(parameter);
        
        return cmdOutputString;
     }
     
-    abstract String excuteLocalCmd(String parameter) throws GameDataException;   
+    abstract String excuteLocalCmd(String parameter) throws GameDataException, IOException;   
 }
