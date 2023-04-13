@@ -14,12 +14,13 @@ public class CmdClientCreate extends CmdClient {
     @Override
     String excuteLocalCmd(String parameter) throws GameDataException {
         // set user as player (true) in users (GameData)
+        createGame();
         return "";
     }
 
     private void createGame() {
-      GameData.gameRunning = true;
-      System.out.println(GameData.gameRunning);
+        db.gameRunning = true;
+        
     }
     
 }
