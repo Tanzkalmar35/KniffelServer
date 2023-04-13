@@ -34,6 +34,8 @@ public class KniffelServer {
                     Thread threadClient = new Thread(new ClientHandler(clientSocket, gameDB));
                     
                     threadClient.start();
+                    
+                    System.out.println("Server is ready to go!")
 
                 } catch (IOException ex) {
 
