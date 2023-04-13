@@ -16,5 +16,10 @@ public class CmdClientCreate extends CmdClient {
         // set user as player (true) in users (GameData)
         return "";
     }
+
+    private void createGame() {
+      GameData.gameRunning = true;
+      System.out.println(GameData.gameRunning);
+    }
     
 }

@@ -21,6 +21,8 @@ public class GameData {
 
     private final int maxUsers;
 
+    public Boolean gameRunning = false;
+
     public GameData(int maxNumberUsers, int maxNumberPlayers) {
         this.maxUsers = maxNumberUsers;
         this.maxPlayers = maxNumberPlayers;
