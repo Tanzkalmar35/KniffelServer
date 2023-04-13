@@ -19,8 +19,17 @@ public class CmdClientCreate extends CmdClient {
     }
 
     private void createGame() {
+      if (gameCreatable()) {
         db.gameRunning = true;
+      }  
+       
         
+    }
+
+    public Boolean gameCreatable() {
+      db.connectedUserList.size() <= 1 ? return false;
+      !db.gameRunning ? return false;
+      return true;
     }
     
 }
