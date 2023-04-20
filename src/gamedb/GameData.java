@@ -17,7 +17,7 @@ public class GameData {
     private final int maxPlayers;
     private final int maxUsers;
     public HashMap<String, Boolean> users = new HashMap<>();
-    public Boolean gameRunning = false;
+    public Boolean lobbyCreated = false;
 
     public GameData(int maxNumberUsers, int maxNumberPlayers) {
         this.maxUsers = maxNumberUsers;
@@ -31,8 +31,7 @@ public class GameData {
     public int getNumberOfConnectedUsers() {
         try {
             readLock.lock();
-            int size = connectedUserList.size();
-            return size;
+            return connectedUserList.size();
         } finally {
             readLock.unlock();
         }

@@ -1,5 +1,6 @@
 package kniffelserver;
 
+import gamedb.DataConnectedUser;
 import gamedb.GameData;
 import gamedb.GameDataException;
 
@@ -15,19 +16,20 @@ public class CmdClientCreate extends CmdClient {
     String excuteLocalCmd(String parameter) throws GameDataException {
         // set user as player (true) in users (GameData)
         createGame();
-        return "";
+        DataConnectedUser user = new DataConnectedUser(clientSocket);
+        db.users.put(user.getNickname(), true);
+        System.out.println(db.users);
+        return "Game created successfully \n";
     }
 
     private void createGame() {
-        if (gameCreatable()) {
-            db.gameRunning = true;
-        }
+        if (gameCreatable()) db.lobbyCreated = true;
 
 
     }
 
     public Boolean gameCreatable() {
-        return db.connectedUserList.size() > 1 && !db.gameRunning;
+        return db.connectedUserList.size() > 1 && !db.lobbyCreated;
     }
 
 }

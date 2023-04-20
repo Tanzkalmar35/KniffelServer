@@ -56,25 +56,23 @@ public class ClientHandler implements Runnable {
 
                 String inputString;
 
-                while (((inputString = inBuf.readLine()) != null) && (shutdown == false)) {
+                while (((inputString = inBuf.readLine()) != null) && (!shutdown)) {
 
                     inputString = inputString.trim();
-                    String parsedData[] = inputString.split(" ");
+                    String[] parsedData = inputString.split(" ");
 
                     boolean foundCmd = false;
                     for (int index = 0; index < clientCmdList.size(); index++) {
                         if (clientCmdList.get(index).getCmdName().compareTo(parsedData[0]) == 0) {
                             outBuf.print(clientCmdList.get(index).excuteLocalCmd(inputString));
                             foundCmd = true;
-                            if (CmdClientExit.class.isInstance(clientCmdList.get(index))) {
+                            if (clientCmdList.get(index) instanceof CmdClientExit) {
                                 shutdown = ((CmdClientExit) clientCmdList.get(index)).isClientExit();
                             }
-                        } else {
-                            outBuf.print("Command not found.");
                         }
                     }
 
-                    if (foundCmd == false) {
+                    if (!foundCmd) {
                         outBuf.println("error: unknown command " + parsedData[0]);
                     }
 
