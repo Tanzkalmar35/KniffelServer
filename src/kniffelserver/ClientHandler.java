@@ -26,9 +26,9 @@ public class ClientHandler implements Runnable {
         clientCmdList.add(new CmdClientHelp(gameDB, clientSocket, "help"));
         clientCmdList.add(new CmdClientRename(gameDB, clientSocket, "rename"));
         clientCmdList.add(new CmdClientList(gameDB, clientSocket, "list"));
-        clientCmdList.add(new CmdClientLogout(gameDB, clientSocket, "logout"));
-        clientCmdList.add(new CmdClientVersion(gameDB, clientSocket, "version")); // Commands implemented till here
-        clientCmdList.add(new CmdClientCreate(gameDB, clientSocket, "creategame"));
+        clientCmdList.add(new CmdClientLogout(gameDB, clientSocket, "logout")); // except this one
+        clientCmdList.add(new CmdClientVersion(gameDB, clientSocket, "version"));
+        clientCmdList.add(new CmdClientCreate(gameDB, clientSocket, "creategame")); // all above implemented
         clientCmdList.add(new CmdClientJoin(gameDB, clientSocket, "joingame"));
         clientCmdList.add(new CmdClientLeave(gameDB, clientSocket, "leavegame"));
         clientCmdList.add(new CmdClientStart(gameDB, clientSocket, "startgame"));
