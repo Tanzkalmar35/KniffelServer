@@ -2,7 +2,7 @@ package kniffelserver;
 
 import gamedb.GameData;
 import gamedb.GameDataToMuchPlayersException;
-import gamedb.GameDicesManagement;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,12 +12,11 @@ import java.util.ArrayList;
 
 public class ClientHandler implements Runnable {
 
-    private boolean shutdown = false;
     private final Socket clientSocket;
     private final GameData gameDB;
-    private PrintWriter outBuf = null;
-
     private final ArrayList<CmdClient> clientCmdList;
+    private boolean shutdown = false;
+    private PrintWriter outBuf = null;
 
     ClientHandler(Socket clientSocket, GameData gameDB) {
         this.clientSocket = clientSocket;
@@ -70,6 +69,8 @@ public class ClientHandler implements Runnable {
                             if (CmdClientExit.class.isInstance(clientCmdList.get(index))) {
                                 shutdown = ((CmdClientExit) clientCmdList.get(index)).isClientExit();
                             }
+                        } else {
+                            outBuf.print("Command not found.");
                         }
                     }
 

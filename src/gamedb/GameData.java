@@ -10,17 +10,13 @@ import java.util.regex.Pattern;
 
 public class GameData {
 
+    public final ArrayList<DataConnectedUser> connectedUserList;
     private final ReadWriteLock readWriteLock;
     private final Lock readLock;
     private final Lock writeLock;
-
-    private final ArrayList<DataConnectedUser> connectedUserList;
-    public HashMap<String, Boolean> users = new HashMap<>();
-
     private final int maxPlayers;
-
     private final int maxUsers;
-
+    public HashMap<String, Boolean> users = new HashMap<>();
     public Boolean gameRunning = false;
 
     public GameData(int maxNumberUsers, int maxNumberPlayers) {
@@ -87,8 +83,8 @@ public class GameData {
             if (p.matcher(nickname).matches()) {
                 try {
                     getConnectedUser(clientSocket).setNickname(nickname);
-                    for(String k : users.keySet()){
-                        if(getConnectedUser(clientSocket).getNickname().equals(k)) {
+                    for (String k : users.keySet()) {
+                        if (getConnectedUser(clientSocket).getNickname().equals(k)) {
                             users.remove(k);
                             users.put(nickname, false);
                         }

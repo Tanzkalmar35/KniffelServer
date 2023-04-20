@@ -1,6 +1,7 @@
 package kniffelserver;
 
 import gamedb.GameData;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -22,7 +23,7 @@ public class KniffelServer {
         gameDB = new GameData(maxConnectedUsers, maxPlayers);
 
         try {
-            
+
             ServerSocket serverSocket = new ServerSocket(portNumber);
             System.out.println("connecting...");
             while (true) {
@@ -30,12 +31,12 @@ public class KniffelServer {
                 try {
 
                     Socket clientSocket = serverSocket.accept();
-                    
+
                     Thread threadClient = new Thread(new ClientHandler(clientSocket, gameDB));
-                    
+
                     threadClient.start();
-                    
-                    System.out.println("Server is ready to go!")
+
+                    System.out.println("Server is ready to go!");
 
                 } catch (IOException ex) {
 

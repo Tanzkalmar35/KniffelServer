@@ -1,14 +1,14 @@
 package kniffelserver;
 
-import java.net.Socket;
-
 import gamedb.GameData;
 import gamedb.GameDataException;
 
+import java.net.Socket;
+
 public class CmdClientCreate extends CmdClient {
-    
+
     public CmdClientCreate(GameData db, Socket clientSocket, String cmdName) {
-        super(db, clientSocket, cmdName);    
+        super(db, clientSocket, cmdName);
     }
 
     @Override
@@ -19,17 +19,15 @@ public class CmdClientCreate extends CmdClient {
     }
 
     private void createGame() {
-      if (gameCreatable()) {
-        db.gameRunning = true;
-      }  
-       
-        
+        if (gameCreatable()) {
+            db.gameRunning = true;
+        }
+
+
     }
 
     public Boolean gameCreatable() {
-      db.connectedUserList.size() <= 1 ? return false;
-      !db.gameRunning ? return false;
-      return true;
+        return db.connectedUserList.size() > 1 && !db.gameRunning;
     }
-    
+
 }
