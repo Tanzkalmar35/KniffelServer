@@ -3,8 +3,8 @@ package kniffelserver;
 import gamedb.GameData;
 import gamedb.GameDataException;
 import gamedb.GameDataUnknownUserException;
+
 import java.net.Socket;
-import java.util.HashMap;
 
 public class CmdClientUsers extends CmdClient {
 
@@ -14,13 +14,13 @@ public class CmdClientUsers extends CmdClient {
 
     @Override
     String excuteLocalCmd(String parameter) throws GameDataException {
-     String outputString = "";
+        String outputString = "";
         try {
             for (int index = 0; index < db.getNumberOfConnectedUsers(); index++) {
-                outputString += db.getConnectedUserNickname(index) + "\r\n";
+                outputString = outputString + (db.getConnectedUserNickname(index) + "\r\n");
             }
         } catch (GameDataUnknownUserException ex) {
-            outputString += "error: user not exists\r\n";
+            outputString += "error: user does not exist\r\n";
         }
         return outputString;
     }

@@ -4,6 +4,7 @@ import gamedb.GameData;
 import gamedb.GameDataException;
 import gamedb.GameDataUnsupportedCharactersException;
 import gamedb.GameDataUserExistsException;
+
 import java.net.Socket;
 
 public class CmdClientRename extends CmdClient {
@@ -17,14 +18,17 @@ public class CmdClientRename extends CmdClient {
         String trimedCmdString = parameter.replaceFirst(getCmdName(), "");
         trimedCmdString = trimedCmdString.trim();
         String outputString = "";
+        if (db.users.containsKey(trimedCmdString))
+            return "A user with this username already exists. Please use another name.";
         try {
             db.renameConnectedUser(clientSocket, trimedCmdString);
+            outputString += "Successfully renamed you to " + trimedCmdString;
         } catch (GameDataUserExistsException ex) {
-            outputString  += "error: user not exists\r\n";
+            outputString += "error: user not exists\r\n";
         } catch (GameDataUnsupportedCharactersException ex) {
-            outputString  += "error: only alphanumeric characters are allowed in the nickname.\r\n";
+            outputString += "error: only alphanumeric characters are allowed in the nickname.\r\n";
         }
         return outputString;
     }
-    
+
 }

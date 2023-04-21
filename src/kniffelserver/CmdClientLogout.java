@@ -1,11 +1,14 @@
 package kniffelserver;
 
-import java.net.Socket;
-
 import gamedb.GameData;
 import gamedb.GameDataException;
 
+import java.io.IOException;
+import java.net.Socket;
+
 public class CmdClientLogout extends CmdClient {
+
+    boolean clientExit = false;
 
     public CmdClientLogout(GameData db, Socket clientSocket, String cmdName) {
         super(db, clientSocket, cmdName);
@@ -13,8 +16,19 @@ public class CmdClientLogout extends CmdClient {
 
     @Override
     String excuteLocalCmd(String parameter) throws GameDataException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'excuteLocalCmd'");
-    }   
-    
+        String outputString = "byebye\r\n";
+        clientExit = true;
+        db.connectedUserList.remove(db.getConnectedUserNickname(clientSocket));
+        try {
+            clientSocket.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return outputString;
+    }
+
+    public boolean isClientExit() {
+        return clientExit;
+    }
+
 }

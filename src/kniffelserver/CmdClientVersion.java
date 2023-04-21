@@ -1,9 +1,9 @@
 package kniffelserver;
 
-import java.net.Socket;
-
 import gamedb.GameData;
 import gamedb.GameDataException;
+
+import java.net.Socket;
 
 public class CmdClientVersion extends CmdClient {
 
@@ -13,8 +13,7 @@ public class CmdClientVersion extends CmdClient {
 
     @Override
     String excuteLocalCmd(String parameter) throws GameDataException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'excuteLocalCmd'");
+        return "You are using: KniffelServer " + db.serverVersion + "\r\n";
     }
-    
+
 }

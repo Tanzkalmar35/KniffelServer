@@ -1,4 +1,5 @@
 package kniffelserver;
+
 import gamedb.GameData;
 import gamedb.GameDataException;
 
@@ -6,7 +7,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
-
 
 
 public class CmdClientList extends CmdClient {
@@ -23,13 +23,19 @@ public class CmdClientList extends CmdClient {
         outBuf = new PrintWriter(clientSocket.getOutputStream(), true);
         switch (trimInputString(parameter).toLowerCase()) {
             case "users":
-                outBuf.println("\n=== Users ===");
+                outBuf.println("\r\n=== Users ===");
                 outBuf.println(new CmdClientUsers(db, clientSocket, parameter).excuteLocalCmd(parameter));
                 break;
-        
+
             case "players":
-                outBuf.println("\n=== Players ===");
-                outBuf.println(db.users.toString());
+                outBuf.println("\r\n=== Players ===");
+                if (db.users.containsValue(true)) {
+                    for (String user : db.users.keySet()) {
+                        if (db.users.get(user)) {
+                            outBuf.println(user);
+                        }
+                    }
+                } else outBuf.println("Currently no one is playing.");
                 break;
 
             case "rules":
@@ -37,8 +43,7 @@ public class CmdClientList extends CmdClient {
                 break;
 
             default:
-
-                break;
+                return "Command not found. Valid list commands are: \r\n - list users \r\n - list players \r\n - list rules";
         }
         return "";
     }
@@ -52,17 +57,17 @@ public class CmdClientList extends CmdClient {
         return result;
     }
 
-    private void setRules(){
+    private void setRules() {
         rules.add("Rule 1");
         rules.add("Rule 2");
         rules.add("Rule 3");
         rules.add("Rule 4");
         rules.add("Rule 5");
-        
+
     }
 
     private void printRules() {
         outBuf.println(rules.toString());
     }
-    
+
 }

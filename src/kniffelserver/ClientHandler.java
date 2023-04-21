@@ -26,10 +26,10 @@ public class ClientHandler implements Runnable {
         clientCmdList.add(new CmdClientHelp(gameDB, clientSocket, "help"));
         clientCmdList.add(new CmdClientRename(gameDB, clientSocket, "rename"));
         clientCmdList.add(new CmdClientList(gameDB, clientSocket, "list"));
-        clientCmdList.add(new CmdClientLogout(gameDB, clientSocket, "logout")); // except this one
+        clientCmdList.add(new CmdClientLogout(gameDB, clientSocket, "logout"));
         clientCmdList.add(new CmdClientVersion(gameDB, clientSocket, "version"));
-        clientCmdList.add(new CmdClientCreate(gameDB, clientSocket, "creategame")); // all above implemented
-        clientCmdList.add(new CmdClientJoin(gameDB, clientSocket, "joingame"));
+        clientCmdList.add(new CmdClientCreate(gameDB, clientSocket, "creategame"));
+        clientCmdList.add(new CmdClientJoin(gameDB, clientSocket, "joingame")); // all above implemented
         clientCmdList.add(new CmdClientLeave(gameDB, clientSocket, "leavegame"));
         clientCmdList.add(new CmdClientStart(gameDB, clientSocket, "startgame"));
         clientCmdList.add(new CmdClientRollDice(gameDB, clientSocket, "rolldice"));
@@ -53,6 +53,13 @@ public class ClientHandler implements Runnable {
 
                 outBuf.println("Type help for further information.");
                 outBuf.println("server: ok\r\n");
+                outBuf.println("Please choose your username: \r\n");
+
+                String username = inBuf.readLine();
+                for (int i = 0; i < clientCmdList.size(); i++) {
+                    if (clientCmdList.get(i).getCmdName().equals("rename"))
+                        outBuf.println(clientCmdList.get(i).excuteLocalCmd(username));
+                }
 
                 String inputString;
 
@@ -66,8 +73,8 @@ public class ClientHandler implements Runnable {
                         if (clientCmdList.get(index).getCmdName().compareTo(parsedData[0]) == 0) {
                             outBuf.print(clientCmdList.get(index).excuteLocalCmd(inputString));
                             foundCmd = true;
-                            if (clientCmdList.get(index) instanceof CmdClientExit) {
-                                shutdown = ((CmdClientExit) clientCmdList.get(index)).isClientExit();
+                            if (clientCmdList.get(index) instanceof CmdClientLogout) {
+                                shutdown = ((CmdClientLogout) clientCmdList.get(index)).isClientExit();
                             }
                         }
                     }

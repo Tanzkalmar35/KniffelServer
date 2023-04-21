@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 
 public class GameData {
 
+    public final String serverVersion = "v1.0.0";
     public final ArrayList<DataConnectedUser> connectedUserList;
     private final ReadWriteLock readWriteLock;
     private final Lock readLock;
@@ -17,7 +18,8 @@ public class GameData {
     private final int maxPlayers;
     private final int maxUsers;
     public HashMap<String, Boolean> users = new HashMap<>();
-    public Boolean lobbyCreated = false;
+    public Boolean gameCreated = false;
+    public Boolean gameStarted = false;
 
     public GameData(int maxNumberUsers, int maxNumberPlayers) {
         this.maxUsers = maxNumberUsers;
@@ -37,7 +39,7 @@ public class GameData {
         }
     }
 
-    private DataConnectedUser getConnectedUser(Socket socket) throws GameDataUnknownUserException {
+    public DataConnectedUser getConnectedUser(Socket socket) throws GameDataUnknownUserException {
         for (DataConnectedUser connectedUser : connectedUserList) {
             if (connectedUser.getSocket() == socket) {
                 return connectedUser;
