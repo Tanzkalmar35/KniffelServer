@@ -18,7 +18,8 @@ public class CmdClientLogout extends CmdClient {
     String excuteLocalCmd(String parameter) throws GameDataException {
         String outputString = "byebye\r\n";
         clientExit = true;
-        db.connectedUserList.remove(db.getConnectedUserNickname(clientSocket));
+        db.connectedUserList.remove(db.getConnectedUser(clientSocket).getNickname());
+        db.users.remove(db.getConnectedUser(clientSocket).getNickname());
         try {
             clientSocket.close();
         } catch (IOException e) {
