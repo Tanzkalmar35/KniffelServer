@@ -5,6 +5,8 @@
  */
 package gamedb;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 /**
@@ -36,6 +38,21 @@ public class DataConnectedUser {
     }
 
     /**
+     * Sends a message to all connected clients
+     *
+     * @param message the message that is to be sent
+     */
+    public static void sendMessage(String message, Socket clientSocket) {
+        PrintWriter outBuf = null;
+        try {
+            outBuf = new PrintWriter(clientSocket.getOutputStream(), true);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        outBuf.println(message);
+    }
+
+    /**
      * Get socket of connected user
      *
      * @return socket
@@ -53,7 +70,6 @@ public class DataConnectedUser {
         return nickname;
     }
 
-    
     /**
      * Set nickname of connected user
      *

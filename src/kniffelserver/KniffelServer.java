@@ -32,6 +32,8 @@ public class KniffelServer {
 
                     Socket clientSocket = serverSocket.accept();
 
+                    gameDB.clientList.add(clientSocket);
+
                     Thread threadClient = new Thread(new ClientHandler(clientSocket, gameDB));
 
                     threadClient.start();

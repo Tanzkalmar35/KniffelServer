@@ -8,10 +8,11 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.regex.Pattern;
 
-public class GameData {
+public class GameData extends Thread {
 
     public final String serverVersion = "v1.0.0";
     public final ArrayList<DataConnectedUser> connectedUserList;
+    public final ArrayList<Socket> clientList = new ArrayList<>();
     private final ReadWriteLock readWriteLock;
     private final Lock readLock;
     private final Lock writeLock;

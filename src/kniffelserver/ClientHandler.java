@@ -1,5 +1,6 @@
 package kniffelserver;
 
+import gamedb.DataConnectedUser;
 import gamedb.GameData;
 import gamedb.GameDataToMuchPlayersException;
 
@@ -61,6 +62,8 @@ public class ClientHandler implements Runnable {
                         outBuf.println(clientCmdList.get(i).excuteLocalCmd(username));
                 }
 
+                sendToAll(username + " entered the lobby");
+
                 String inputString;
 
                 while (((inputString = inBuf.readLine()) != null) && (!shutdown)) {
@@ -97,6 +100,12 @@ public class ClientHandler implements Runnable {
             }
         } catch (IOException ex) {
             System.out.println("exception: " + ex.toString());
+        }
+    }
+
+    public void sendToAll(String message) {
+        for (Socket socket : gameDB.clientList) {
+            DataConnectedUser.sendMessage(message, socket);
         }
     }
 }
