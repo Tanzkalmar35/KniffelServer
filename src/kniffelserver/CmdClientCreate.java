@@ -21,6 +21,7 @@ public class CmdClientCreate extends CmdClient {
         if (gameCreatable()) db.gameCreated = true;
         String username = db.getConnectedUser(clientSocket).getNickname();
         db.users.put(username, true);
+        db.sendToAll(username + " created a game. Type joingame to join.");
     }
 
     public Boolean gameCreatable() {

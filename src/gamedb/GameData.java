@@ -134,4 +134,10 @@ public class GameData extends Thread {
             readLock.unlock();
         }
     }
+
+    public void sendToAll(String message) {
+        for (Socket socket : clientList) {
+            DataConnectedUser.sendMessage(message, socket);
+        }
+    }
 }

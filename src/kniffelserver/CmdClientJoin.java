@@ -16,6 +16,7 @@ public class CmdClientJoin extends CmdClient {
         if (gameExisting()) {
             String username = db.getConnectedUser(clientSocket).getNickname();
             db.users.put(username, true);
+            db.sendToAll(username + " joined the game.");
             return "Joined game. \r\n";
         } else return "No game running. You can create a game using the creategame command.\r\n";
     }

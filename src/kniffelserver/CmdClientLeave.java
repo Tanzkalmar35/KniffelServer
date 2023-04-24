@@ -13,7 +13,9 @@ public class CmdClientLeave extends CmdClient {
 
     @Override
     String excuteLocalCmd(String parameter) throws GameDataException {
-        db.users.put(db.getConnectedUser(clientSocket).getNickname(), false);
+        String username = db.getConnectedUser(clientSocket).getNickname();
+        db.users.put(username, false);
+        db.sendToAll(username + " left the game.");
         return "Game left.";
     }
 

@@ -1,6 +1,5 @@
 package kniffelserver;
 
-import gamedb.DataConnectedUser;
 import gamedb.GameData;
 import gamedb.GameDataToMuchPlayersException;
 
@@ -30,9 +29,9 @@ public class ClientHandler implements Runnable {
         clientCmdList.add(new CmdClientLogout(gameDB, clientSocket, "logout"));
         clientCmdList.add(new CmdClientVersion(gameDB, clientSocket, "version"));
         clientCmdList.add(new CmdClientCreate(gameDB, clientSocket, "creategame"));
-        clientCmdList.add(new CmdClientJoin(gameDB, clientSocket, "joingame")); // all above implemented
+        clientCmdList.add(new CmdClientJoin(gameDB, clientSocket, "joingame"));
         clientCmdList.add(new CmdClientLeave(gameDB, clientSocket, "leavegame"));
-        clientCmdList.add(new CmdClientStart(gameDB, clientSocket, "startgame"));
+        clientCmdList.add(new CmdClientStart(gameDB, clientSocket, "startgame")); // all above implemented
         clientCmdList.add(new CmdClientRollDice(gameDB, clientSocket, "rolldice"));
         clientCmdList.add(new CmdClientKeepDIce(gameDB, clientSocket, "keepdice"));
         clientCmdList.add(new CmdClientSort(gameDB, clientSocket, "sort"));
@@ -57,12 +56,11 @@ public class ClientHandler implements Runnable {
                 outBuf.println("Please choose your username: \r\n");
 
                 String username = inBuf.readLine();
-                for (int i = 0; i < clientCmdList.size(); i++) {
-                    if (clientCmdList.get(i).getCmdName().equals("rename"))
-                        outBuf.println(clientCmdList.get(i).excuteLocalCmd(username));
+                for (CmdClient cmdClient : clientCmdList) {
+                    if (cmdClient.getCmdName().equals("rename"))
+                        outBuf.println(cmdClient.excuteLocalCmd(username));
                 }
-
-                sendToAll(username + " entered the lobby");
+                gameDB.sendToAll(username + " entered the lobby");
 
                 String inputString;
 
@@ -72,12 +70,12 @@ public class ClientHandler implements Runnable {
                     String[] parsedData = inputString.split(" ");
 
                     boolean foundCmd = false;
-                    for (int index = 0; index < clientCmdList.size(); index++) {
-                        if (clientCmdList.get(index).getCmdName().compareTo(parsedData[0]) == 0) {
-                            outBuf.print(clientCmdList.get(index).excuteLocalCmd(inputString));
+                    for (CmdClient cmdClient : clientCmdList) {
+                        if (cmdClient.getCmdName().compareTo(parsedData[0]) == 0) {
+                            outBuf.print(cmdClient.excuteLocalCmd(inputString));
                             foundCmd = true;
-                            if (clientCmdList.get(index) instanceof CmdClientLogout) {
-                                shutdown = ((CmdClientLogout) clientCmdList.get(index)).isClientExit();
+                            if (cmdClient instanceof CmdClientLogout) {
+                                shutdown = ((CmdClientLogout) cmdClient).isClientExit();
                             }
                         }
                     }
@@ -100,12 +98,6 @@ public class ClientHandler implements Runnable {
             }
         } catch (IOException ex) {
             System.out.println("exception: " + ex.toString());
-        }
-    }
-
-    public void sendToAll(String message) {
-        for (Socket socket : gameDB.clientList) {
-            DataConnectedUser.sendMessage(message, socket);
         }
     }
 }
