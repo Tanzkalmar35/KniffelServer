@@ -33,7 +33,6 @@ public class ClientHandler implements Runnable {
         clientCmdList.add(new CmdClientLeave(gameDB, clientSocket, "leavegame"));
         clientCmdList.add(new CmdClientStart(gameDB, clientSocket, "startgame"));
         clientCmdList.add(new CmdClientRollDice(gameDB, clientSocket, "rolldice")); // all above implemented
-        clientCmdList.add(new CmdClientKeepDIce(gameDB, clientSocket, "keepdice"));
         clientCmdList.add(new CmdClientSort(gameDB, clientSocket, "sort"));
         clientCmdList.add(new CmdClientKick(gameDB, clientSocket, "kick"));
 

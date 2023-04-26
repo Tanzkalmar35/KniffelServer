@@ -53,8 +53,8 @@ public class CmdClientRollDice extends CmdClient {
             String workingInput = inputString.replaceAll(",", "");
             workingInput = workingInput.replaceAll(" ", "");
             String[] workingInputList = workingInput.split("");
-
-            System.out.println("Length of list: " + workingInputList.length);
+            if (workingInput.equalsIgnoreCase("all") || workingInput.equalsIgnoreCase("keepdice"))
+                System.out.println("Length of list: " + workingInputList.length);
 
             System.out.println("Edited input: " + workingInput);
 
