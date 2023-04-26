@@ -10,6 +10,7 @@ import gamedb.GameDataException;
 import gamedb.GameDice;
 
 import java.net.Socket;
+import java.util.ArrayList;
 
 /**
  * @author carst
@@ -26,49 +27,10 @@ public class CmdClientRollDice extends CmdClient {
     @Override
     String excuteLocalCmd(String parameter) throws GameDataException {
 
-        /* String emptyOutput = "";
+        return getDice() + "\r\n";
+    }
 
-        try {
-
-            BufferedReader inBuf = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            PrintWriter outBuf = new PrintWriter(this.clientSocket.getOutputStream(), true);
-
-            String outputString = dice.getDices() + "\r\n";
-
-            outputString = outputString.replaceAll(",", "");
-            outputString = outputString.replaceAll(" ", "");
-            String[] dices = outputString.split("");
-
-            outBuf.println(outputString);
-            outBuf.println("Which ones do you want to keep?");
-
-            String inputString = inBuf.readLine();
-
-            String workingInput = inputString.replaceAll(",", "");
-            workingInput = workingInput.replaceAll(" ", "");
-            String[] workingInputList = workingInput.split("");
-            if (workingInput.equalsIgnoreCase("all") || workingInput.equalsIgnoreCase("keepdice")) {
-                outBuf.println("Keeping all.");
-                return emptyOutput;
-            }
-            System.out.println("Length of list: " + workingInputList.length);
-
-            System.out.println("Edited input: " + workingInput);
-
-            List<String> list = new ArrayList<>();
-
-            for (int i = 0; i < workingInputList.length; i++) {
-                String a = dices[Integer.parseInt(workingInputList[i])];
-                list.add(i, a);
-            }
-
-            outBuf.println("Keeping " + list);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } */
-
-
-        return "";
+    private ArrayList<Integer> getDice() {
+        return new GameDice().getDices();
     }
 }
