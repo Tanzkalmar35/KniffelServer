@@ -1,9 +1,11 @@
 package kniffelserver;
 
+import java.io.IOException;
 import java.net.Socket;
 
 import gamedb.GameData;
 import gamedb.GameDataException;
+
 
 public class CmdClientKick extends CmdClient {
 
@@ -13,8 +15,15 @@ public class CmdClientKick extends CmdClient {
 
     @Override
     String excuteLocalCmd(String parameter) throws GameDataException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'excuteLocalCmd'");
+        try {
+            db.sendToAll(db.getConnectedUser(clientSocket).getNickname() + " was kicked from the server");
+            new CmdClientLogout(db, clientSocket, "Kick").executeCmd(parameter);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return "" ;
     }
-    
+
+
+
 }
