@@ -9,13 +9,7 @@ import gamedb.GameData;
 import gamedb.GameDataException;
 import gamedb.GameDice;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author carst
@@ -32,7 +26,7 @@ public class CmdClientRollDice extends CmdClient {
     @Override
     String excuteLocalCmd(String parameter) throws GameDataException {
 
-        String emptyOutput = "";
+        /* String emptyOutput = "";
 
         try {
 
@@ -53,8 +47,11 @@ public class CmdClientRollDice extends CmdClient {
             String workingInput = inputString.replaceAll(",", "");
             workingInput = workingInput.replaceAll(" ", "");
             String[] workingInputList = workingInput.split("");
-            if (workingInput.equalsIgnoreCase("all") || workingInput.equalsIgnoreCase("keepdice"))
-                System.out.println("Length of list: " + workingInputList.length);
+            if (workingInput.equalsIgnoreCase("all") || workingInput.equalsIgnoreCase("keepdice")) {
+                outBuf.println("Keeping all.");
+                return emptyOutput;
+            }
+            System.out.println("Length of list: " + workingInputList.length);
 
             System.out.println("Edited input: " + workingInput);
 
@@ -69,24 +66,9 @@ public class CmdClientRollDice extends CmdClient {
 
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        } */
 
 
-        return emptyOutput;
-    }
-
-    // return the first dice after convert it
-    public ArrayList<Integer> get1stDice() {
-        return new ArrayList<>();
-    }
-
-    // return a list of ids of the dice the user wants to keep and after converting
-    public ArrayList<Integer> getKeepings() {
-        return new ArrayList<>();
-    }
-
-    // return the numbers the user wants to keep as Arraylist
-    public ArrayList<Integer> keptNumers() {
-        return new ArrayList<>();
+        return "";
     }
 }
