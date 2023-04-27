@@ -19,12 +19,16 @@ public class CmdClientKeepDIce extends CmdClient {
     private PrintWriter outBuf;
     private BufferedReader inBuf;
 
-    private Integer rerolls = 0;
-
+    private int rerolls = 3;
     private boolean end = false;
+
+   
+
+
     public CmdClientKeepDIce(GameData db, Socket clientSocket, String cmdName) {
         super(db, clientSocket, cmdName);
     }
+
     public CmdClientKeepDIce(GameData db, Socket clientSocket, String cmdName, ArrayList<Integer> Dices) {
         super(db, clientSocket, cmdName);
         this.Dices = Dices;
@@ -37,34 +41,81 @@ public class CmdClientKeepDIce extends CmdClient {
     }
 
     @Override
-    String excuteLocalCmd(String parameter) throws GameDataException {
+    String excuteLocalCmd(String parameter) throws GameDataException  {
         return "";
     }
 
-    public ArrayList<Integer> checkdices(){
+    public ArrayList<Integer> checkdices() throws IOException {
 
-        outBuf.println(this.Dices);
-        outBuf.println("Keep [ all || [1,2,3,4,5]]");
+        
+        boolean check = true;
+        
+        String[] finalInput = new String[1];
+        
+            for (int i = 0; i < rerolls; i++) {
+                outBuf.println(this.Dices);
+                outBuf.println("Keep [ all || [1,2,3,4,5]]");
+            
+                check = true;
+                while (check) {
+                    
+                    String input = inBuf.readLine().toLowerCase();
+                    if (checkInput(input.split(" "))) {
+                        finalInput = input.split(" ");
+                        check = !check;
+                    }else{
+                        outBuf.println("error: pls enter a valid option");
+                    }
+                    ;
 
-
-        try {
-            checkInput(inBuf.readLine().split(" "));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+                }
+                this.Dices = rerolldices(finalInput);
+                
+            }
+              
+            
+        
 
         return this.Dices;
     }
 
-    private void checkInput(String[] input){
+    private boolean checkInput(String[] input) {
 
-       if(input[1].equals("all")){
-            this.Dices = new CmdClientKeepDIce(db, clientSocket, "", new GameDice().getDices()).checkdices();
-            outBuf.println(this.Dices);
+        if (input[0].equals("keep") && input.length == 2) {
+            return true;
+        } else if (input.length > 2) {
+            outBuf.println("error: to many parameter");
+        } else {
+            outBuf.println("error: pls enter a valid option");
+        }
+        return false;
 
-       }
+    }
+
+    private ArrayList<Integer> rerolldices(String[] input) {
+
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        if (!input[1].equals("--all")) {
+            String[] keepdices = input[1].split(",");
+            ArrayList<Integer> dicenumbers = new ArrayList<Integer>();
+            for (int i = 0; i < keepdices.length; i++) {
+                dicenumbers.add(Integer.valueOf(keepdices[i]));
+            }
+
+            for (int j = 0; j < dicenumbers.size(); j++) {
+                result.add(this.Dices.get(dicenumbers.get(j) - 1));
+            }
+
+            int remaining = 5 - dicenumbers.size();
+
+            for (int i = 0; i < remaining; i++) {
+                result.add(new GameDice().randomDice());
+            }
 
         }
 
+        return result;
+
+    }
 
 }

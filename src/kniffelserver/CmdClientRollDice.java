@@ -28,12 +28,12 @@ public class CmdClientRollDice extends CmdClient {
     }
 
     @Override
-    String excuteLocalCmd(String parameter) throws GameDataException {
+    String excuteLocalCmd(String parameter) throws GameDataException, IOException {
 
         return getDice() + "\r\n";
     }
 
-    private ArrayList<Integer> getDice() {
+    private ArrayList<Integer> getDice() throws IOException {
 
             return new CmdClientKeepDIce(db, clientSocket, "", new GameDice().getDices()).checkdices();
 
