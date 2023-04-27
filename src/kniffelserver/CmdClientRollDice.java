@@ -9,6 +9,7 @@ import gamedb.GameData;
 import gamedb.GameDataException;
 import gamedb.GameDice;
 
+import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -18,6 +19,8 @@ import java.util.ArrayList;
 public class CmdClientRollDice extends CmdClient {
 
     GameDice dice;
+
+
 
     public CmdClientRollDice(GameData db, Socket clientSocket, String cmdName) {
         super(db, clientSocket, cmdName);
@@ -31,6 +34,9 @@ public class CmdClientRollDice extends CmdClient {
     }
 
     private ArrayList<Integer> getDice() {
-        return new GameDice().getDices();
+
+            return new CmdClientKeepDIce(db, clientSocket, "", new GameDice().getDices()).checkdices();
+
+
     }
 }
