@@ -33,12 +33,7 @@ public class CmdClientSort extends CmdClient {
     String excuteLocalCmd(String parameter) throws GameDataException {
         // TODO Auto-generated method stub
         ArrayList<Integer> test = new ArrayList<Integer>();
-        test.add(1);
-        test.add(1);
-        test.add(2);
-        test.add(2);
-        test.add(2);
-        sort(test);
+
         outBuf.println(this.SortetDices.toString());
         return "";
 
@@ -48,9 +43,18 @@ public class CmdClientSort extends CmdClient {
     public HashMap<String, ArrayList<Integer>> sort(ArrayList<Integer> dices){
 
         if(pairsort(dices )){
+            if(fullHouseSort(dices)){
+                if(streetSort(dices)){
 
+
+                }else{
+                    outBuf.println("error: sorting street");
+                }
+            } else{
+                outBuf.println("error: sorting fullhouse");
+            }
         }else{
-            outBuf.println("error: now Pairs");
+            outBuf.println("error: sorting pairs");
         }
         return this.SortetDices;
     }
@@ -70,6 +74,13 @@ public class CmdClientSort extends CmdClient {
         }
 
         return true;
+
     }
 
+    private boolean streetSort(ArrayList<Integer> dices){
+        return true;
+    }
+    private boolean fullHouseSort(ArrayList<Integer> dices){
+        return true;
+    }
 }
