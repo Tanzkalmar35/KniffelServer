@@ -49,12 +49,12 @@ public class CmdClientKeepDIce extends CmdClient {
 
         
         boolean check = true;
-        
+        this.rerolls = 3;
         String[] finalInput = new String[1];
         
-            for (int i = 0; i < rerolls; i++) {
+            for (int i = 0; i  < rerolls; i++) {
                 outBuf.println(this.Dices);
-                outBuf.println("Keep [ all || [1,2,3,4,5]]");
+                outBuf.println("Keep [ [all] || [1,2,3,4,5] ]");
             
                 check = true;
                 while (check) {
@@ -95,7 +95,7 @@ public class CmdClientKeepDIce extends CmdClient {
     private ArrayList<Integer> rerolldices(String[] input) {
 
         ArrayList<Integer> result = new ArrayList<Integer>();
-        if (!input[1].equals("--all")) {
+        if (!input[1].equals("all")) {
             String[] keepdices = input[1].split(",");
             ArrayList<Integer> dicenumbers = new ArrayList<Integer>();
             for (int i = 0; i < keepdices.length; i++) {
@@ -112,6 +112,9 @@ public class CmdClientKeepDIce extends CmdClient {
                 result.add(new GameDice().randomDice());
             }
 
+        }else if(input[1].equals("all")){
+            this.rerolls = 1;
+            result = this.Dices;
         }
 
         return result;
