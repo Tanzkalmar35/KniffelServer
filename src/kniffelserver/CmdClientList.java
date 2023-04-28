@@ -22,12 +22,11 @@ public class CmdClientList extends CmdClient {
     String excuteLocalCmd(String parameter) throws GameDataException, IOException {
         outBuf = new PrintWriter(clientSocket.getOutputStream(), true);
         switch (trimInputString(parameter).toLowerCase()) {
-            case "users":
+            case "users" -> {
                 outBuf.println("\r\n=== Users ===");
                 outBuf.println(new CmdClientUsers(db, clientSocket, parameter).excuteLocalCmd(parameter));
-                break;
-
-            case "players":
+            }
+            case "players" -> {
                 outBuf.println("\r\n=== Players ===");
                 if (db.users.containsValue(true)) {
                     for (String user : db.users.keySet()) {
@@ -36,14 +35,11 @@ public class CmdClientList extends CmdClient {
                         }
                     }
                 } else outBuf.println("Currently no one is playing.");
-                break;
-
-            case "rules":
-                printRules();
-                break;
-
-            default:
+            }
+            case "rules" -> printRules();
+            default -> {
                 return "Command not found. Valid list commands are: \r\n - list users \r\n - list players \r\n - list rules";
+            }
         }
         return "";
     }
@@ -51,7 +47,7 @@ public class CmdClientList extends CmdClient {
     public String trimInputString(String parameter) {
         String result = "";
         String[] parts = parameter.split(" ");
-        if (parts.length > 0 || parts.length > 1) {
+        if (parts.length != 0) {
             result = parts[1];
         }
         return result;
