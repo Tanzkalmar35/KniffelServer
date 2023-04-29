@@ -13,14 +13,16 @@ import gamedb.GameData;
 import gamedb.GameDataException;
 
 public class CmdClientSort extends CmdClient {
-    private HashMap<String, ArrayList<Integer>> SortetDices = new  HashMap<>();
+    private HashMap<String, ArrayList<Integer>> SortetDices = new HashMap<>();
 
-    private String[] pairs = {"Two Pair", "Three Pair", "Four Pair", "Kniffel" };
+    private String[] pairs = { "Two Pair", "Three Pair", "Four Pair", "Kniffel" };
 
     private PrintWriter outBuf;
     private BufferedReader inBuf;
+
     public CmdClientSort(GameData db, Socket clientSocket, String cmdName) {
-        super(db, clientSocket, cmdName);try {
+        super(db, clientSocket, cmdName);
+        try {
             this.outBuf = new PrintWriter(clientSocket.getOutputStream(), true);
             this.inBuf = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         } catch (IOException e) {
@@ -33,40 +35,43 @@ public class CmdClientSort extends CmdClient {
     String excuteLocalCmd(String parameter) throws GameDataException {
         // TODO Auto-generated method stub
         ArrayList<Integer> test = new ArrayList<Integer>();
-
+        test.add(1);
+        test.add(2);
+        test.add(3);
+        test.add(4);
+        test.add(2);
+        sort(test);
         outBuf.println(this.SortetDices.toString());
         return "";
 
     }
 
+    public HashMap<String, ArrayList<Integer>> sort(ArrayList<Integer> dices) {
 
-    public HashMap<String, ArrayList<Integer>> sort(ArrayList<Integer> dices){
+        if (pairsort(dices)) {
+            if (fullHouseSort(dices)) {
+                if (streetSort(dices)) {
 
-        if(pairsort(dices )){
-            if(fullHouseSort(dices)){
-                if(streetSort(dices)){
-
-
-                }else{
+                } else {
                     outBuf.println("error: sorting street");
                 }
-            } else{
+            } else {
                 outBuf.println("error: sorting fullhouse");
             }
-        }else{
+        } else {
             outBuf.println("error: sorting pairs");
         }
         return this.SortetDices;
     }
 
-    public boolean pairsort(ArrayList<Integer> dices){
-        Integer pairs = 0;
-        Integer[] dicenumbers = {1,2,3,4,5,6};
-        for(int i = 0; i < dicenumbers.length; i++){
+    public boolean pairsort(ArrayList<Integer> dices) {
+
+        Integer[] dicenumbers = { 1, 2, 3, 4, 5, 6 };
+        for (int i = 0; i < dicenumbers.length; i++) {
 
             int pairscore = Collections.frequency(dices, dicenumbers[i]);
-            if(pairscore > 1){
-                for(int j = 1; j < pairscore; j++){
+            if (pairscore > 1) {
+                for (int j = 1; j < pairscore; j++) {
                     this.SortetDices.put(this.pairs[j - 1], dices);
 
                 }
@@ -77,10 +82,38 @@ public class CmdClientSort extends CmdClient {
 
     }
 
-    private boolean streetSort(ArrayList<Integer> dices){
+    private boolean streetSort(ArrayList<Integer> dices) {
+        if (smallstreet(dices) && bigstreet(dices)) {
+            return true;
+        }
+        return false;
+
+
+    }
+
+    private boolean fullHouseSort(ArrayList<Integer> dices) {
+        Integer[] dicenumbers = { 1, 2, 3, 4, 5, 6 };
+        for (int i = 0; i < dicenumbers.length; i++) {
+            int fullhousethrees = Collections.frequency(dices, dicenumbers[i]);
+            if (fullhousethrees == 3) {
+                for (int j = 0; j < dicenumbers.length; j++) {
+                    int fullhousetows = Collections.frequency(dices, dicenumbers[j]);
+                    if (fullhousetows == 2) {
+                        this.SortetDices.put("Full House", dices);
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean smallstreet(ArrayList<Integer> dices) {
+      
         return true;
     }
-    private boolean fullHouseSort(ArrayList<Integer> dices){
+
+    private boolean bigstreet(ArrayList<Integer> dices) {
         return true;
     }
 }
