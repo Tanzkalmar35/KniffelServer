@@ -64,7 +64,7 @@ public class CmdClientKeepDIce extends CmdClient {
                         finalInput = input.split(" ");
                         check = !check;
                     }else{
-                        outBuf.println("error: pls enter a valid option");
+                        outBuf.println("error:  pls enter a valid option");
                     }
                     ;
 
