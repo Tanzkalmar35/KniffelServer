@@ -39,7 +39,7 @@ public class CmdClientSort extends CmdClient {
         test.add(2);
         test.add(3);
         test.add(4);
-        test.add(2);
+        test.add(5);
         sort(test);
         outBuf.println(this.SortetDices.toString());
         return "";
@@ -88,7 +88,6 @@ public class CmdClientSort extends CmdClient {
         }
         return false;
 
-
     }
 
     private boolean fullHouseSort(ArrayList<Integer> dices) {
@@ -105,15 +104,28 @@ public class CmdClientSort extends CmdClient {
                 }
             }
         }
-        return false;
+        return true;
     }
 
     private boolean smallstreet(ArrayList<Integer> dices) {
-      
+
+        if (dices.get(0) == (dices.get(1) - 1) && dices.get(1) == (dices.get(2) - 1)
+                && dices.get(2) == (dices.get(3) - 1)
+                || dices.get(1) == (dices.get(2) - 1) && dices.get(2) == (dices.get(3) - 1)
+                        && dices.get(3) == (dices.get(4) - 1)) {
+            this.SortetDices.put("Straight Small Street", dices);
+        }
+
         return true;
     }
 
     private boolean bigstreet(ArrayList<Integer> dices) {
+        if (dices.get(0) == 1 && dices.get(1) == 2 && dices.get(2) == 3 && dices.get(3) == 4 && dices.get(4) == 5
+                || dices.get(0) == 2 && dices.get(1) == 3 && dices.get(2) == 4 && dices.get(3) == 5
+                        && dices.get(4) == 6) {
+                            this.SortetDices.put("Straight Big Street", dices);
+        }
         return true;
     }
+
 }
