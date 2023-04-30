@@ -34,6 +34,9 @@ public class GameLoop {
 
             new CmdClientSort(db, socket, "").sortDice(new CmdClientKeepDIce(db, socket, "").getDice());
 
+            // get which option to choose
+
+            // write into collection
 
         }
     }
