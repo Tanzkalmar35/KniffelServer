@@ -32,6 +32,8 @@ public class GameLoop {
             DataConnectedUser.sendMessage("Your dice: \r\n", getSocket(player));
 
             new CmdClientRollDice(db, socket, "").excuteLocalCmd("");
+
+            new CmdClientSort(db, socket, "").sortDice(new CmdClientRollDice(db, socket, "").dice);
         }
     }
 

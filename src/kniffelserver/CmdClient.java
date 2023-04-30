@@ -7,11 +7,10 @@ import java.io.IOException;
 import java.net.Socket;
 
 abstract class CmdClient {
-    
-    GameData db;
-    private final String cmdName;
+
     final Socket clientSocket;
-    
+    private final String cmdName;
+    GameData db;
     private String cmdOutputString;
 
     public CmdClient(GameData db, Socket clientSocket, String cmdName) {
@@ -19,17 +18,17 @@ abstract class CmdClient {
         this.clientSocket = clientSocket;
         this.cmdName = cmdName;
     }
-    
+
     public String getCmdName() {
         return cmdName;
     }
-    
+
     public String executeCmd(String parameter) throws GameDataException, IOException {
-       cmdOutputString = "server: "+getCmdName()+"\r\n";
-       cmdOutputString += excuteLocalCmd(parameter);
-       
-       return cmdOutputString;
+        cmdOutputString = "server: " + getCmdName() + "\r\n";
+        cmdOutputString += excuteLocalCmd(parameter);
+
+        return cmdOutputString;
     }
-    
-    abstract String excuteLocalCmd(String parameter) throws GameDataException, IOException;   
+
+    abstract String excuteLocalCmd(String parameter) throws GameDataException, IOException;
 }

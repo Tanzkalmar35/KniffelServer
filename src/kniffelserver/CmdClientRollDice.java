@@ -18,12 +18,10 @@ import java.util.ArrayList;
  */
 public class CmdClientRollDice extends CmdClient {
 
-    GameDice dice;
-
+    ArrayList<Integer> dice;
 
     public CmdClientRollDice(GameData db, Socket clientSocket, String cmdName) {
         super(db, clientSocket, cmdName);
-        dice = new GameDice();
     }
 
     @Override
@@ -33,9 +31,6 @@ public class CmdClientRollDice extends CmdClient {
     }
 
     private ArrayList<Integer> getDice() throws IOException {
-
-        return new CmdClientKeepDIce(db, clientSocket, "", new GameDice().getDices()).checkDices();
-
-
+        return dice = new CmdClientKeepDIce(db, clientSocket, "", new GameDice().getDices()).checkDices();
     }
 }
