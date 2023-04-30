@@ -25,13 +25,13 @@ public class GameLoop {
 
             outBuf = new PrintWriter(socket.getOutputStream(), true);
 
-            db.sendToAll("It's " + player + "'s turn.");
+            db.sendToAll("It's " + player + "'s turn. \r\n");
             Socket currentUser;
-            DataConnectedUser.sendMessage("Your collection: \r\n" + db.userCollections(), getSocket(player));
+            DataConnectedUser.sendMessage("Your collection: \r\n" + getUser(player).getCollection().userCollection() + "\r\n", getSocket(player));
 
+            DataConnectedUser.sendMessage("Your dice: \r\n", getSocket(player));
 
             new CmdClientRollDice(db, socket, "").excuteLocalCmd("");
-            // ask what to fill the dice in (nick sort)
         }
     }
 
@@ -52,6 +52,15 @@ public class GameLoop {
             }
         }
         return new Socket();
+    }
+
+    public DataConnectedUser getUser(String username) {
+        for (DataConnectedUser i : db.connectedUserList) {
+            if (i.getNickname().equals(username)) {
+                return i;
+            }
+        }
+        return new DataConnectedUser(socket);
     }
 
 }

@@ -21,7 +21,7 @@ public class DataConnectedUser {
      * socket of connected user
      */
     private final Socket socket;
-
+    public CollectionManagement gameCollection;
     /**
      * nickname of connected user
      */
@@ -35,6 +35,7 @@ public class DataConnectedUser {
     public DataConnectedUser(Socket socket) {
         this.socket = socket;
         this.nickname = "Anonymous";
+        this.gameCollection = new CollectionManagement();
     }
 
     /**
@@ -77,6 +78,15 @@ public class DataConnectedUser {
      */
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    /**
+     * Get collection of connected user
+     *
+     * @return collection
+     */
+    public CollectionManagement getCollection() {
+        return this.gameCollection;
     }
 
 
