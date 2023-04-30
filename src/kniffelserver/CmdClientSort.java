@@ -1,5 +1,8 @@
 package kniffelserver;
 
+import gamedb.GameData;
+import gamedb.GameDataException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,16 +12,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
-import gamedb.GameData;
-import gamedb.GameDataException;
-
 public class CmdClientSort extends CmdClient {
-    private HashMap<String, ArrayList<Integer>> SortetDices = new HashMap<>();
+    private final HashMap<String, ArrayList<Integer>> sortedDices = new HashMap<>();
 
-    private String[] pairs = { "Two Pair", "Three Pair", "Four Pair", "Kniffel" };
+    private final String[] pairs = {"Two Pair", "Three Pair", "Four Pair", "Kniffel"};
 
-    private PrintWriter outBuf;
-    private BufferedReader inBuf;
+    private final PrintWriter outBuf;
+    private final BufferedReader inBuf;
 
     public CmdClientSort(GameData db, Socket clientSocket, String cmdName) {
         super(db, clientSocket, cmdName);
@@ -41,14 +41,14 @@ public class CmdClientSort extends CmdClient {
         test.add(4);
         test.add(3);
         sort(test);
-        outBuf.println(this.SortetDices.toString());
+        outBuf.println(this.sortedDices.toString());
         return "";
 
     }
 
     public HashMap<String, ArrayList<Integer>> sort(ArrayList<Integer> dices) {
 
-        if (pairsort(dices)) {
+        if (pairSort(dices)) {
             if (fullHouseSort(dices)) {
                 if (streetSort(dices)) {
 
@@ -61,18 +61,18 @@ public class CmdClientSort extends CmdClient {
         } else {
             outBuf.println("error: sorting pairs");
         }
-        return this.SortetDices;
+        return this.sortedDices;
     }
 
-    public boolean pairsort(ArrayList<Integer> dices) {
+    public boolean pairSort(ArrayList<Integer> dices) {
 
-        Integer[] dicenumbers = { 1, 2, 3, 4, 5, 6 };
-        for (int i = 0; i < dicenumbers.length; i++) {
+        Integer[] diceNumbers = {1, 2, 3, 4, 5, 6};
+        for (Integer diceNumber : diceNumbers) {
 
-            int pairscore = Collections.frequency(dices, dicenumbers[i]);
-            if (pairscore > 1) {
-                for (int j = 1; j < pairscore; j++) {
-                    this.SortetDices.put(this.pairs[j - 1], dices);
+            int pairScore = Collections.frequency(dices, diceNumber);
+            if (pairScore > 1) {
+                for (int j = 1; j < pairScore; j++) {
+                    this.sortedDices.put(this.pairs[j - 1], dices);
 
                 }
             }
@@ -83,22 +83,19 @@ public class CmdClientSort extends CmdClient {
     }
 
     private boolean streetSort(ArrayList<Integer> dices) {
-        if (smallstreet(dices) && bigstreet(dices)) {
-            return true;
-        }
-        return false;
+        return smallStreet(dices) && bigStreet(dices);
 
     }
 
     private boolean fullHouseSort(ArrayList<Integer> dices) {
-        Integer[] dicenumbers = { 1, 2, 3, 4, 5, 6 };
-        for (int i = 0; i < dicenumbers.length; i++) {
-            int fullhousethrees = Collections.frequency(dices, dicenumbers[i]);
-            if (fullhousethrees == 3) {
-                for (int j = 0; j < dicenumbers.length; j++) {
-                    int fullhousetows = Collections.frequency(dices, dicenumbers[j]);
-                    if (fullhousetows == 2) {
-                        this.SortetDices.put("Full House", dices);
+        Integer[] diceNumbers = {1, 2, 3, 4, 5, 6};
+        for (Integer diceNumber : diceNumbers) {
+            int fullHouseThrees = Collections.frequency(dices, diceNumber);
+            if (fullHouseThrees == 3) {
+                for (Integer number : diceNumbers) {
+                    int fullHouseTwos = Collections.frequency(dices, number);
+                    if (fullHouseTwos == 2) {
+                        this.sortedDices.put("Full House", dices);
                         return true;
                     }
                 }
@@ -107,26 +104,22 @@ public class CmdClientSort extends CmdClient {
         return true;
     }
 
-    private boolean smallstreet(ArrayList<Integer> dices) {
-        int smallstreet = 0;
-        Integer[] dicenumbers = { 1, 2, 3, 4, 5, 6 };
+    private boolean smallStreet(ArrayList<Integer> dices) {
         if (dices.contains(1) && dices.contains(2) && dices.contains(3) && dices.contains(4)) {
-            this.SortetDices.put("Small Street", dices);
+            this.sortedDices.put("Small Street", dices);
         } else if (dices.contains(2) && dices.contains(3) && dices.contains(4) && dices.contains(5)) {
-            this.SortetDices.put("Small Street", dices);
-        } else if (dices.contains(1) && dices.contains(2) && dices.contains(3) && dices.contains(4)) {
-            this.SortetDices.put("Small Street", dices);
+            this.sortedDices.put("Small Street", dices);
         }
 
         return true;
     }
 
-    private boolean bigstreet(ArrayList<Integer> dices) {
+    private boolean bigStreet(ArrayList<Integer> dices) {
         Collections.sort(dices);
         if (dices.get(0) == 1 && dices.get(1) == 2 && dices.get(2) == 3 && dices.get(3) == 4 && dices.get(4) == 5
                 || dices.get(0) == 2 && dices.get(1) == 3 && dices.get(2) == 4 && dices.get(3) == 5
-                        && dices.get(4) == 6) {
-            this.SortetDices.put("Straight Big Street", dices);
+                && dices.get(4) == 6) {
+            this.sortedDices.put("Straight Big Street", dices);
         }
         return true;
     }

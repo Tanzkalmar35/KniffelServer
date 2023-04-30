@@ -21,7 +21,6 @@ public class CmdClientRollDice extends CmdClient {
     GameDice dice;
 
 
-
     public CmdClientRollDice(GameData db, Socket clientSocket, String cmdName) {
         super(db, clientSocket, cmdName);
         dice = new GameDice();
@@ -35,7 +34,7 @@ public class CmdClientRollDice extends CmdClient {
 
     private ArrayList<Integer> getDice() throws IOException {
 
-            return new CmdClientKeepDIce(db, clientSocket, "", new GameDice().getDices()).checkdices();
+        return new CmdClientKeepDIce(db, clientSocket, "", new GameDice().getDices()).checkDices();
 
 
     }
