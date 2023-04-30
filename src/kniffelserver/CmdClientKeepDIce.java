@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class CmdClientKeepDIce extends CmdClient {
 
-    private ArrayList<Integer> Dices;
+    private static ArrayList<Integer> dices;
     private PrintWriter outBuf;
     private BufferedReader inBuf;
 
@@ -27,7 +27,7 @@ public class CmdClientKeepDIce extends CmdClient {
 
     public CmdClientKeepDIce(GameData db, Socket clientSocket, String cmdName, ArrayList<Integer> Dices) {
         super(db, clientSocket, cmdName);
-        this.Dices = Dices;
+        dices = Dices;
         try {
             this.outBuf = new PrintWriter(clientSocket.getOutputStream(), true);
             this.inBuf = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -49,7 +49,7 @@ public class CmdClientKeepDIce extends CmdClient {
         String[] finalInput = new String[1];
 
         for (int i = 0; i < rerolls; i++) {
-            outBuf.println(this.Dices);
+            outBuf.println(dices);
             outBuf.println("Keep [ [all] || [1,2,3,4,5] ]");
 
             check = true;
@@ -63,9 +63,9 @@ public class CmdClientKeepDIce extends CmdClient {
                     outBuf.println("error:  pls enter a valid option");
                 }
             }
-            this.Dices = rerollDices(finalInput);
+            dices = rerollDices(finalInput);
         }
-        return this.Dices;
+        return dices;
     }
 
     private boolean checkInput(String[] input) {
@@ -92,7 +92,7 @@ public class CmdClientKeepDIce extends CmdClient {
             }
 
             for (Integer dicenumber : dicenumbers) {
-                result.add(this.Dices.get(dicenumber - 1));
+                result.add(dices.get(dicenumber - 1));
             }
 
             int remaining = 5 - dicenumbers.size();
@@ -103,11 +103,15 @@ public class CmdClientKeepDIce extends CmdClient {
 
         } else {
             this.rerolls = 1;
-            result = this.Dices;
+            result = dices;
         }
 
         return result;
 
+    }
+
+    public ArrayList<Integer> getDice() {
+        return dices;
     }
 
 }

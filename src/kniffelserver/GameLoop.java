@@ -26,14 +26,15 @@ public class GameLoop {
             outBuf = new PrintWriter(socket.getOutputStream(), true);
 
             db.sendToAll("It's " + player + "'s turn. \r\n");
-            Socket currentUser;
-            DataConnectedUser.sendMessage("Your collection: \r\n" + getUser(player).getCollection().userCollection() + "\r\n", getSocket(player));
 
+            DataConnectedUser.sendMessage("Your collection: \r\n" + getUser(player).getCollection().userCollection() + "\r\n", getSocket(player));
             DataConnectedUser.sendMessage("Your dice: \r\n", getSocket(player));
 
             new CmdClientRollDice(db, socket, "").excuteLocalCmd("");
 
-            new CmdClientSort(db, socket, "").sortDice(new CmdClientRollDice(db, socket, "").dice);
+            new CmdClientSort(db, socket, "").sortDice(new CmdClientKeepDIce(db, socket, "").getDice());
+
+
         }
     }
 
