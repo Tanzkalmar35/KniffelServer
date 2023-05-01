@@ -12,19 +12,21 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
+import javax.swing.text.html.HTMLDocument.HTMLReader.PreAction;
+
 public class CmdClientSort extends CmdClient {
     private final HashMap<String, ArrayList<Integer>> sortedDices = new HashMap<>();
 
     private final String[] pairs = {"Two Pair", "Three Pair", "Four Pair", "Kniffel"};
 
     private final PrintWriter outBuf;
-    private final BufferedReader inBuf;
+   
 
     public CmdClientSort(GameData db, Socket clientSocket, String cmdName) {
         super(db, clientSocket, cmdName);
         try {
             this.outBuf = new PrintWriter(clientSocket.getOutputStream(), true);
-            this.inBuf = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -51,8 +53,16 @@ public class CmdClientSort extends CmdClient {
         } else {
             outBuf.println("error: sorting pairs");
         }
-        outBuf.println(this.sortedDices.toString());
+        
+        writeCombos();
         return this.sortedDices;
+    }
+
+    private void writeCombos(){
+        outBuf.println("You have: ");
+        for(String s : this.sortedDices.keySet()){
+            outBuf.println(s);
+        }
     }
 
     public boolean pairSort(ArrayList<Integer> dices) {
