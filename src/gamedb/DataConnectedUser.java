@@ -21,6 +21,9 @@ public class DataConnectedUser {
      * socket of connected user
      */
     private final Socket socket;
+    /**
+     * collection of connected user
+     */
     public CollectionManagement gameCollection;
     /**
      * nickname of connected user
