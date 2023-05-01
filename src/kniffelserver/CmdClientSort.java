@@ -35,6 +35,8 @@ public class CmdClientSort extends CmdClient {
 
     @Override
     String excuteLocalCmd(String parameter) throws GameDataException {
+        
+        
         return "";
     }
 
@@ -54,7 +56,7 @@ public class CmdClientSort extends CmdClient {
             outBuf.println("error: sorting pairs");
         }
         
-        writeCombos();
+        choose();
         return this.sortedDices;
     }
 
@@ -124,5 +126,8 @@ public class CmdClientSort extends CmdClient {
         }
         return true;
     }
-
+    public ArrayList<Integer> choose(){
+        writeCombos();
+        return new ArrayList<>();
+    }
 }
