@@ -1,38 +1,31 @@
 package gamedb;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CollectionManagement {
 
-    public ArrayList<HashMap<String, String>> userCollection() {
-        ArrayList<HashMap<String, String>> data = new ArrayList<>();
+    public HashMap<String, Integer> data = new HashMap<>();
 
-        data.add(generateUserData("Nur 1"));
-        data.add(generateUserData("Nur 2"));
-        data.add(generateUserData("Nur 3"));
-        data.add(generateUserData("Nur 4"));
-        data.add(generateUserData("Nur 5"));
-        data.add(generateUserData("Nur 6"));
-        data.add(generateUserData("Dreierpasch"));
-        data.add(generateUserData("Viererpasch"));
-        data.add(generateUserData("Full house"));
-        data.add(generateUserData("Kleine Straße"));
-        data.add(generateUserData("Große Straße"));
-        data.add(generateUserData("Kniffel"));
-        data.add(generateUserData("Chance"));
-
-        return data;
+    public CollectionManagement() {
+        userCollection();
     }
 
-    private HashMap<String, String> generateUserData(String collectionName) {
-        HashMap<String, String> line = new HashMap<>();
-        line.put(collectionName, "\r\n");
-        return line;
+    public HashMap<String, Integer> userCollection() {
+
+        this.data.put("ones", 0);
+        this.data.put("twos", 0);
+        this.data.put("threes", 0);
+        this.data.put("fours", 0);
+        this.data.put("fives", 0);
+        this.data.put("sixes", 0);
+        this.data.put("threePair", 0);
+        this.data.put("fourPair", 0);
+        this.data.put("fullHouse", 0);
+        this.data.put("smallStreet", 0);
+        this.data.put("bigStreet", 0);
+        this.data.put("kniffel", 0);
+        this.data.put("chance", 0);
+
+        return this.data;
     }
-
-    
-
-    
-
 }

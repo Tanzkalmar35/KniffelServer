@@ -85,14 +85,14 @@ public class CmdClientKeepDIce extends CmdClient {
 
         ArrayList<Integer> result = new ArrayList<Integer>();
         if (!input[1].equals("all")) {
-            String[] keepdices = input[1].split(",");
+            String[] keepDices = input[1].split(",");
             ArrayList<Integer> dicenumbers = new ArrayList<Integer>();
-            for (String keepdice : keepdices) {
-                dicenumbers.add(Integer.valueOf(keepdice));
+            for (String keepDice : keepDices) {
+                dicenumbers.add(Integer.valueOf(keepDice));
             }
 
-            for (Integer dicenumber : dicenumbers) {
-                result.add(dices.get(dicenumber - 1));
+            for (Integer diceNumber : dicenumbers) {
+                result.add(dices.get(diceNumber - 1));
             }
 
             int remaining = 5 - dicenumbers.size();
@@ -103,7 +103,8 @@ public class CmdClientKeepDIce extends CmdClient {
 
         } else {
             this.rerolls = 1;
-            result = dices;
+            result.addAll(dices);
+
         }
 
         return result;
