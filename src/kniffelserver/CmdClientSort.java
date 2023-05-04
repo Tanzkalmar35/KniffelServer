@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.HashMap;
 
 public class CmdClientSort extends CmdClient {
-    private final HashMap<String, ArrayList<Integer>> sortedDices = new HashMap<>();
+    static HashMap<String, ArrayList<Integer>> sortedDices = new HashMap<>();
 
     private final String[] pairs = {"threePair", "fourPair", "kniffel"};
 
@@ -37,7 +37,8 @@ public class CmdClientSort extends CmdClient {
     }
 
     public HashMap<String, ArrayList<Integer>> sortDice(ArrayList<Integer> dices) {
-
+        sortedDices = new HashMap<String, ArrayList<Integer>>();
+        solodices(dices);
         if (pairSort(dices)) {
             if (fullHouseSort(dices)) {
                 if (!streetSort(dices)) {
@@ -125,4 +126,22 @@ public class CmdClientSort extends CmdClient {
         writeCombos();
         return new ArrayList<>();
     }
+
+    private void solodices(ArrayList<Integer> dices) {
+        Integer[] diceNumbers = {1, 2, 3, 4, 5, 6};
+        String[] fieldnames = {"ones", "twos", "threes", "fours", "fives", "sixes"};
+        for (Integer i : diceNumbers) {
+            int solo = Collections.frequency(dices, i);
+
+            if (solo > 0) {
+                sortedDices.put(fieldnames[i - 1], dices);
+            }
+        }
+
+    }
+
+    public HashMap<String, ArrayList<Integer>> getSortedDices() {
+        return sortedDices;
+    }
+
 }
