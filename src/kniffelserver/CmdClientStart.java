@@ -14,9 +14,13 @@ public class CmdClientStart extends CmdClient {
 
     @Override
     String excuteLocalCmd(String parameter) throws GameDataException, IOException {
-        db.gameStarted = true;
-        db.sendToAll(db.getConnectedUser(clientSocket).getNickname() + " started the game.");
-        new GameLoop(db, clientSocket).start();
+        if (db.gameCreated) {
+            db.gameStarted = true;
+            db.sendToAll(db.getConnectedUser(clientSocket).getNickname() + " started the game.");
+            new GameLoop(db, clientSocket).start();
+        } else {
+            db.sendToAll("No game created yet. Please create one before trying to start one.");
+        }
         return "";
     }
 
