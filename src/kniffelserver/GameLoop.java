@@ -25,27 +25,30 @@ public class GameLoop {
     }
 
     public void start() throws IOException {
-        for (String player : getPlayers()) {
+        for (int i = 0; i < 13; i++) {
+            for (String player : getPlayers()) {
 
-            outBuf = new PrintWriter(socket.getOutputStream(), true);
-            inBuf = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                outBuf = new PrintWriter(socket.getOutputStream(), true);
+                inBuf = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-            db.sendToAll("It's " + player + "'s turn. \r\n");
+                db.sendToAll("It's " + player + "'s turn. \r\n");
 
-            DataConnectedUser.sendMessage("Your collection: \r\n" + getUser(player).getCollection().userCollection() + "\r\n", getSocket(player));
-            DataConnectedUser.sendMessage("Your dice: \r\n", getSocket(player));
+                DataConnectedUser.sendMessage("Your collection: \r\n" + getUser(player).getCollection().userCollection() + "\r\n", getSocket(player));
+                DataConnectedUser.sendMessage("Your dice: \r\n", getSocket(player));
 
-            new CmdClientRollDice(db, socket, "").excuteLocalCmd(""); // fix logging (wrong client)
+                new CmdClientRollDice(db, socket, "").excuteLocalCmd(""); // fix logging (wrong client)
 
-            new CmdClientSort(db, socket, "").sortDice(new CmdClientKeepDIce(db, socket, "").getDice()); // fix loggings
+                new CmdClientSort(db, socket, "").sortDice(new CmdClientKeepDIce(db, socket, "").getDice()); // fix loggings
 
-            // get which option to choose
-            outBuf.println("What do you want to sort this in?"); // fix loggings
+                // get which option to choose
+                outBuf.println("What do you want to sort this in?"); // fix loggings
 
-            String input = inBuf.readLine();
-            storeCollection(getUser(player), input); // fix loggings
+                String input = inBuf.readLine();
+                storeCollection(getUser(player), input); // fix loggings
 
-            outBuf.println("Collection stored. Updated collection: \r\n" + getUser(player).gameCollection.data); // fix loggings
+                outBuf.println("Collection stored. Updated collection: \r\n" + getUser(player).gameCollection.data); // fix loggings
+
+            }
 
         }
     }
