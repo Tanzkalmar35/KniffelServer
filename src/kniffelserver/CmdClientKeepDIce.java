@@ -44,26 +44,44 @@ public class CmdClientKeepDIce extends CmdClient {
     public ArrayList<Integer> checkDices() throws IOException {
 
 
-        boolean check = true;
+        boolean check;
 
         String[] finalInput = new String[1];
 
         for (int i = 0; i < rerolls; i++) {
             outBuf.println(dices);
             outBuf.println("Keep [ [all] || [1,2,3,4,5] ]");
-
             check = true;
             while (check) {
 
+                outBuf.println("Going on");
                 String input = inBuf.readLine().toLowerCase();
                 if (checkInput(input.split(" "))) {
+                    outBuf.println("Runs through");
                     finalInput = input.split(" ");
                     check = !check;
                 } else {
                     outBuf.println("error:  pls enter a valid option");
                 }
             }
+            outBuf.println("Ended");
             dices = rerollDices(finalInput);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
         return dices;
     }

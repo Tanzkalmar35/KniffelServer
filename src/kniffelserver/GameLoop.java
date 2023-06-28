@@ -27,25 +27,26 @@ public class GameLoop {
     public void start() throws IOException {
         for (String player : getPlayers()) {
 
-            outBuf = new PrintWriter(socket.getOutputStream(), true);
+            outBuf = new PrintWriter(getSocket(player).getOutputStream(), true);
             inBuf = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            DataConnectedUser user = getUser(player);
 
             db.sendToAll("It's " + player + "'s turn. \r\n");
 
-            DataConnectedUser.sendMessage("Your collection: \r\n" + getUser(player).getCollection().userCollection() + "\r\n", getSocket(player));
-            DataConnectedUser.sendMessage("Your dice: \r\n", getSocket(player));
+            outBuf.println("Your collection: \r\n" + user.gameCollection.data + "\r\n");
+            outBuf.println("Your dice: \r\n");
 
-            new CmdClientRollDice(db, socket, "").excuteLocalCmd(""); // fix logging (wrong client)
+            new CmdClientRollDice(db, getSocket(player), "").excuteLocalCmd(""); // fix logging (wrong client)
 
-            new CmdClientSort(db, socket, "").sortDice(new CmdClientKeepDIce(db, socket, "").getDice()); // fix loggings
+            new CmdClientSort(db, getSocket(player), "").sortDice(new CmdClientKeepDIce(db, getSocket(player), "").getDice()); // fix loggings
 
             // get which option to choose
             outBuf.println("What do you want to sort this in?"); // fix loggings
 
             String input = inBuf.readLine();
-            storeCollection(getUser(player), input); // fix loggings
+            storeCollection(user, input); // fix loggings
 
-            outBuf.println("Collection stored. Updated collection: \r\n" + getUser(player).gameCollection.data); // fix loggings
+            outBuf.println("Collection stored. Updated collection: \r\n" + user.gameCollection.data); // fix loggings
 
         }
     }

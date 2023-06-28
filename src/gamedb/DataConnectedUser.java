@@ -31,6 +31,11 @@ public class DataConnectedUser {
     private String nickname;
 
     /**
+     * checks if the user is the admin of the currently running game
+     */
+    private boolean gameAdmin;
+
+    /**
      * Constructor of class
      *
      * @param socket of connected user
@@ -93,4 +98,11 @@ public class DataConnectedUser {
     }
 
 
+    public boolean isGameAdmin() {
+        return gameAdmin;
+    }
+
+    public void setGameAdmin(boolean gameAdmin) {
+        this.gameAdmin = gameAdmin;
+    }
 }

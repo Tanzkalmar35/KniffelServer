@@ -89,7 +89,7 @@ public class ClientHandler implements Runnable {
                 clientSocket.close();
 
             } catch (GameDataToMuchPlayersException ex) {
-                outBuf.println("error: to much users are be connected");
+                outBuf.println("error: to many users are be connected");
                 outBuf.println("byebye");
                 outBuf.println("server: okay");
                 clientSocket.close();
