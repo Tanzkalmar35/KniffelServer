@@ -8,7 +8,7 @@ import java.net.Socket;
 
 public class KniffelServer {
 
-    private static final int portNumber = 38233;
+    private static final int portNumber = 38333;
 
     private static final int maxPlayers = 5;
 
