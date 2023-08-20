@@ -27,8 +27,10 @@ public class GameLoop {
     public void start() throws IOException {
         for (String player : getPlayers()) {
 
-            outBuf = new PrintWriter(getSocket(player).getOutputStream(), true);
-            inBuf = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            Socket playerSocket = getSocket(player);
+
+            outBuf = new PrintWriter(playerSocket.getOutputStream(), true);
+            inBuf = new BufferedReader(new InputStreamReader(playerSocket.getInputStream()));
             DataConnectedUser user = getUser(player);
 
             db.sendToAll("It's " + player + "'s turn. \r\n");
@@ -36,17 +38,19 @@ public class GameLoop {
             outBuf.println("Your collection: \r\n" + user.gameCollection.data + "\r\n");
             outBuf.println("Your dice: \r\n");
 
-            new CmdClientRollDice(db, getSocket(player), "").excuteLocalCmd(""); // fix logging (wrong client)
+            new CmdClientRollDice(db, playerSocket, "").excuteLocalCmd("");
 
-            new CmdClientSort(db, getSocket(player), "").sortDice(new CmdClientKeepDIce(db, getSocket(player), "").getDice()); // fix loggings
+            // TODO: FIX
+
+            new CmdClientSort(db, getSocket(player), "").sortDice(new CmdClientKeepDice(db, playerSocket, "").getDice()); // fix loggings
 
             // get which option to choose
-            outBuf.println("What do you want to sort this in?"); // fix loggings
+            outBuf.println("What do you want to sort this in?");
 
             String input = inBuf.readLine();
-            storeCollection(user, input); // fix loggings
+            storeCollection(user, input);
 
-            outBuf.println("Collection stored. Updated collection: \r\n" + user.gameCollection.data); // fix loggings
+            outBuf.println("Collection stored. Updated collection: \r\n" + user.gameCollection.data);
 
         }
     }
@@ -62,12 +66,7 @@ public class GameLoop {
     }
 
     public Socket getSocket(String username) {
-        for (DataConnectedUser i : db.connectedUserList) {
-            if (i.getNickname().equals(username)) {
-                return i.getSocket();
-            }
-        }
-        return new Socket();
+        return getUser(username).getSocket();
     }
 
     public DataConnectedUser getUser(String username) {

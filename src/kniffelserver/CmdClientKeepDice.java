@@ -11,7 +11,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class CmdClientKeepDIce extends CmdClient {
+public class CmdClientKeepDice extends CmdClient {
 
     private static ArrayList<Integer> dices;
     private PrintWriter outBuf;
@@ -21,13 +21,13 @@ public class CmdClientKeepDIce extends CmdClient {
     private boolean end = false;
 
 
-    public CmdClientKeepDIce(GameData db, Socket clientSocket, String cmdName) {
+    public CmdClientKeepDice(GameData db, Socket clientSocket, String cmdName) {
         super(db, clientSocket, cmdName);
     }
 
-    public CmdClientKeepDIce(GameData db, Socket clientSocket, String cmdName, ArrayList<Integer> Dices) {
+    public CmdClientKeepDice(GameData db, Socket clientSocket, String cmdName, ArrayList<Integer> dices) {
         super(db, clientSocket, cmdName);
-        dices = Dices;
+        CmdClientKeepDice.dices = dices;
         try {
             this.outBuf = new PrintWriter(clientSocket.getOutputStream(), true);
             this.inBuf = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -51,37 +51,29 @@ public class CmdClientKeepDIce extends CmdClient {
         for (int i = 0; i < rerolls; i++) {
             outBuf.println(dices);
             outBuf.println("Keep [ [all] || [1,2,3,4,5] ]");
-            check = true;
-            while (check) {
+            while (true) {
 
                 outBuf.println("Going on");
-                String input = inBuf.readLine().toLowerCase();
-                if (checkInput(input.split(" "))) {
-                    outBuf.println("Runs through");
-                    finalInput = input.split(" ");
-                    check = !check;
+
+                BufferedReader inputBuffer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+
+                String input = inputBuffer.readLine();
+                String[] splitInput = input.split(" ");
+
+                if (splitInput[0].equals("keep") && splitInput.length == 2) {
+                    if (checkInput(splitInput)) {
+                        outBuf.println("Runs through");
+                        finalInput = splitInput;
+                        break;
+                    } else {
+                        outBuf.println("error:  pls enter a valid option");
+                    }
                 } else {
-                    outBuf.println("error:  pls enter a valid option");
+                    outBuf.println("Sorry, Java is shit");
                 }
             }
             outBuf.println("Ended");
             dices = rerollDices(finalInput);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         }
         return dices;
     }

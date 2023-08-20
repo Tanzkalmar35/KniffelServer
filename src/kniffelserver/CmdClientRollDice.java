@@ -9,8 +9,6 @@ import gamedb.GameData;
 import gamedb.GameDataException;
 import gamedb.GameDice;
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -34,6 +32,6 @@ public class CmdClientRollDice extends CmdClient {
     }
 
     private ArrayList<Integer> getDice() throws IOException {
-        return new CmdClientKeepDIce(db, clientSocket, "", new GameDice().getDices()).checkDices();
+        return new CmdClientKeepDice(db, clientSocket, "", new GameDice().getDices()).checkDices();
     }
 }
